@@ -1,14 +1,92 @@
 import express, {Request, Response} from "express";
 import path from "path";
+import {engine} from "express-handlebars";
+import PostManager from "./PostsManager";
 
 const app = express();
 
-const PORT = 3000
+const PORT = 3000;
 
+// set the views for handlebars
+app.set('views', path.join(__dirname, "../views"));
+
+// set the layouts and partials directories for handlebars
+app.engine("hbs", engine({
+    extname: 'hbs',
+    layoutsDir: path.join(__dirname, '../views/layouts'),
+    partialsDir: path.join(__dirname, '../views/partials'),
+}));
+
+app.set("view engine", 'hbs');
+
+// register express json middleware
+app.use(express.json())
+
+// root
 app.get("/", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "../static/index.html"));
+    res.render("home")
 });
 
-app.listen(PORT)
 
-console.log("listening on port " + 3000)
+// /posts endpoint
+
+// get all posts
+app.get("/posts", (req: Request, res: Response) => {
+    res.json(
+        PostManager.getInstance().getPosts()
+    )
+})
+
+// get a specific post by id
+app.get("/posts/:id", (req: Request, res: Response) => {
+    res.json(
+        PostManager.getInstance().getPost(Number.parseInt(req.params.id))
+    )
+})
+
+// create a new post
+/**
+ * {
+ *     "title": <title>,
+ *     "author": <author>,
+ *     "content": <content>
+ * }
+ */
+app.post("/posts", (req: Request, res: Response) => {
+    res.json(
+        PostManager.getInstance().newPost(
+            req.body.title,
+            req.body.author,
+            req.body.content
+        )
+    )
+})
+
+// update a post by ID
+/**
+ * {
+ *     "title": <title>,
+ *     "author": <author>,
+ *     "content": <content>
+ * }
+ */
+app.put("/posts/:id", (req: Request, res: Response) => {
+    res.json(
+        PostManager.getInstance().updatePost(
+            Number.parseInt(req.params.id),
+            req.body.title,
+            req.body.author,
+            req.body.content
+        )
+    )
+})
+
+// Delete a post by ID
+app.delete("/posts/:id", (req: Request, res: Response) => {
+    PostManager.getInstance().deletePost(Number.parseInt(req.params.id));
+    res.sendStatus(204)
+})
+
+app.listen(PORT);
+
+console.log("listening on port " + PORT);
