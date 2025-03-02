@@ -1,1 +1,3 @@
-{{>smallPost title="Post Title" author="Author" content="This is some post content lalalalalalal"}}
+{{#each post}}
+    {{>smallPost title=this.title author=this.author content=this.content}}
+{{/each}}

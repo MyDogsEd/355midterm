@@ -9,6 +9,7 @@ const express_handlebars_1 = require("express-handlebars");
 const PostsManager_1 = __importDefault(require("./PostsManager"));
 const app = (0, express_1.default)();
 const PORT = 3000;
+// EXPRESS SETTINGS ----------
 // set the views for handlebars
 app.set('views', path_1.default.join(__dirname, "../views"));
 // set the layouts and partials directories for handlebars
@@ -20,11 +21,11 @@ app.engine("hbs", (0, express_handlebars_1.engine)({
 app.set("view engine", 'hbs');
 // register express json middleware
 app.use(express_1.default.json());
-// root
+// WEB APP --------
 app.get("/", (req, res) => {
-    res.render("home");
+    res.render("home", { post: PostsManager_1.default.getInstance().getPosts() });
 });
-// /posts endpoint
+// POSTS/COMMENTS API ------------
 // get all posts
 app.get("/posts", (req, res) => {
     res.json(PostsManager_1.default.getInstance().getPosts());
@@ -61,4 +62,4 @@ app.delete("/posts/:id", (req, res) => {
     res.sendStatus(204);
 });
 app.listen(PORT);
-console.log("listening on port " + 3000);
+console.log("listening on port " + PORT);

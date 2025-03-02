@@ -7,6 +7,8 @@ const app = express();
 
 const PORT = 3000;
 
+// EXPRESS SETTINGS ----------
+
 // set the views for handlebars
 app.set('views', path.join(__dirname, "../views"));
 
@@ -22,13 +24,13 @@ app.set("view engine", 'hbs');
 // register express json middleware
 app.use(express.json())
 
-// root
+// WEB APP --------
 app.get("/", (req: Request, res: Response) => {
-    res.render("home")
+    res.render("home", {post: PostManager.getInstance().getPosts()})
 });
 
 
-// /posts endpoint
+// POSTS/COMMENTS API ------------
 
 // get all posts
 app.get("/posts", (req: Request, res: Response) => {
