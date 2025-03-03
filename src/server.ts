@@ -24,6 +24,9 @@ app.set("view engine", 'hbs');
 // register express json middleware
 app.use(express.json())
 
+// Serve the files in the static dir
+app.use(express.static("static"));
+
 // WEB APP --------
 app.get("/", (req: Request, res: Response) => {
     res.render("home", {post: PostManager.getInstance().getPosts()})
@@ -33,14 +36,14 @@ app.get("/", (req: Request, res: Response) => {
 // POSTS/COMMENTS API ------------
 
 // get all posts
-app.get("/posts", (req: Request, res: Response) => {
+app.get("/api/posts", (req: Request, res: Response) => {
     res.json(
         PostManager.getInstance().getPosts()
     )
 })
 
 // get a specific post by id
-app.get("/posts/:id", (req: Request, res: Response) => {
+app.get("/api/posts/:id", (req: Request, res: Response) => {
     res.json(
         PostManager.getInstance().getPost(Number.parseInt(req.params.id))
     )
@@ -54,7 +57,7 @@ app.get("/posts/:id", (req: Request, res: Response) => {
  *     "content": <content>
  * }
  */
-app.post("/posts", (req: Request, res: Response) => {
+app.post("/api/posts", (req: Request, res: Response) => {
     res.json(
         PostManager.getInstance().newPost(
             req.body.title,
@@ -72,7 +75,7 @@ app.post("/posts", (req: Request, res: Response) => {
  *     "content": <content>
  * }
  */
-app.put("/posts/:id", (req: Request, res: Response) => {
+app.put("/api/posts/:id", (req: Request, res: Response) => {
     res.json(
         PostManager.getInstance().updatePost(
             Number.parseInt(req.params.id),
@@ -84,7 +87,7 @@ app.put("/posts/:id", (req: Request, res: Response) => {
 })
 
 // Delete a post by ID
-app.delete("/posts/:id", (req: Request, res: Response) => {
+app.delete("/api/posts/:id", (req: Request, res: Response) => {
     PostManager.getInstance().deletePost(Number.parseInt(req.params.id));
     res.sendStatus(204)
 })

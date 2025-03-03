@@ -1,1 +1,9 @@
-[{"id":1740953567627,"title":"New Post Title","author":"New Post Author","content":"This is the content that is in the body of the new post","comments":[]},{"id":1740954912824,"title":"New Post Title","author":"New Post Author","content":"This is the content that is in the body of the new post","comments":[]}]
+[
+    {
+      "id": 1740953567627,
+      "title": "New Post Title",
+      "author": "New Post Author",
+      "content": "This is the content that is in the body of the new post",
+      "comments": []
+    }
+  ]
