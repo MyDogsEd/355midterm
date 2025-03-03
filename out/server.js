@@ -28,6 +28,22 @@ app.get("/", (req, res) => {
     res.render("home", { post: PostsManager_1.default.getInstance().getPosts() });
 });
 app.get('/posts/:id', (req, res) => {
+    var post = PostsManager_1.default.getInstance().getPost(Number.parseInt(req.params.id));
+    if (post === undefined) {
+        res.sendStatus(404);
+        return;
+    }
+    var comments = [];
+    post.comments.forEach(element => {
+        comments.push(PostsManager_1.default.getInstance().getComment(element));
+    });
+    res.render("posts", {
+        title: post.title,
+        author: post.author,
+        content: post.content,
+        id: post.id,
+        comment: comments
+    });
 });
 // POSTS/COMMENTS API ------------
 // get all posts
@@ -64,6 +80,17 @@ app.put("/api/posts/:id", (req, res) => {
 app.delete("/api/posts/:id", (req, res) => {
     PostsManager_1.default.getInstance().deletePost(Number.parseInt(req.params.id));
     res.sendStatus(204);
+});
+// create a new comment
+/**
+ * {
+ *     "parentID": <id of parent post>,
+ *     "author": <author>,
+ *     "content": <content>
+ * }
+ */
+app.post("/api/comments", (req, res) => {
+    res.json(PostsManager_1.default.getInstance().newComment(req.body.author, req.body.content, req.body.parentId));
 });
 app.listen(PORT);
 console.log("listening on port " + PORT);

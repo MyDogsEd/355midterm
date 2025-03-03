@@ -1,7 +1,1 @@
-[
-    {
-        "author": "Author",
-        "content": "comment content",
-        "id": 1740963886682
-    }
-]
+[{"author":"Author","content":"comment content","id":1740963886682,"parentId":1740961885518},{"id":1740969235390,"author":"name","content":"jashdf","parentPost":1740953567627},{"id":1740969250400,"author":"This is another comment","content":"This is some more text","parentPost":1740953567627}]

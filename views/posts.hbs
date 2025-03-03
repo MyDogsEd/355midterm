@@ -11,10 +11,11 @@
 </p>
 
 <form class="collapse mt-4" id="newCommentForm">
-    <input class="form-control mb-2" type="text" name="content" id="newCommentUsername" placeholder="Username">
+    <input class="form-control mb-2" type="text" name="author" id="newCommentUsername" placeholder="Username">
+    <input class="d-none" type="text" name="parentId" value="{{id}}">
     <textarea name="content" id="newCommentContent" class="form-control mb-2" type="search" placeholder="Text..."
         aria-label="Text"></textarea>
-    <button class="btn btn-primary">Reply</button>
+    <button id="newCommentButton" class="btn btn-primary">Reply</button>
 </form>
 <hr>
 

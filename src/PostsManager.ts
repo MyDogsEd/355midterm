@@ -55,7 +55,7 @@ export default class PostManager {
     }
 
     public getPost(id: number): Post | undefined {
-        return this.postsMap.get(id)
+        return this.postsMap.get(Number(id))
     }
 
     public getPosts(): Array<Post> {
@@ -107,10 +107,10 @@ export default class PostManager {
         this.writePosts();
     }
 
-    public addCommentToPost(parentPost: number, commentId: number): void {
+    private addCommentToPost(parentPost: number, commentId: number): void {
         var post = this.getPost(parentPost);
-        this.postsMap.set(parentPost, {
-            id: parentPost,
+        this.postsMap.set(Number(parentPost), {
+            id: Number(parentPost),
             title: post!.title,
             author: post!.author,
             content: post!.content,
@@ -146,7 +146,7 @@ export default class PostManager {
             id: id,
             author: author,
             content: content,
-            parentPost: parentPost
+            parentPost: Number(parentPost)
         })
 
         // Write the posts to the JSON file

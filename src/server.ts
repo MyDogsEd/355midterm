@@ -2,7 +2,7 @@ import express, {Request, Response} from "express";
 import path from "path";
 import {engine} from "express-handlebars";
 import PostManager from "./PostsManager";
-import { isUndefined } from "util";
+import Comment from "./Comment";
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use(express.static("static"));
 
 // WEB APP --------
 app.get("/", (req: Request, res: Response) => {
-    res.render("home", {post: PostManager.getInstance().getPosts()})
+    res.render("index", {post: PostManager.getInstance().getPosts()})
 });
 
 app.get('/posts/:id', (req: Request, res: Response) => {
@@ -40,17 +40,18 @@ app.get('/posts/:id', (req: Request, res: Response) => {
         return
     }
 
-    var comments = []
+    var comments: Array<Comment> = []
 
     post.comments.forEach(element => {
-        
+        comments.push(PostManager.getInstance().getComment(element)!)
     });
 
     res.render("posts", {
         title: post.title,
         author: post.author,
         content: post.content,
-        comment: 
+        id: post.id,
+        comment: comments
     })
 })
 
@@ -112,6 +113,20 @@ app.put("/api/posts/:id", (req: Request, res: Response) => {
 app.delete("/api/posts/:id", (req: Request, res: Response) => {
     PostManager.getInstance().deletePost(Number.parseInt(req.params.id));
     res.sendStatus(204)
+})
+
+// create a new comment
+/**
+ * {
+ *     "parentID": <id of parent post>,
+ *     "author": <author>,
+ *     "content": <content>
+ * }
+ */
+app.post("/api/comments", (req: Request, res: Response) => {
+    res.json(
+        PostManager.getInstance().newComment(req.body.author, req.body.content, req.body.parentId)
+    )
 })
 
 app.listen(PORT);
