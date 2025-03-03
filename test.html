@@ -69,27 +69,39 @@
 
         <!-- this is the div that posts will go in -->
         <div class="col-12 col-md-8 ">
+            <p class="h2">Post Title</p>
+            <p class="text-secondary mb-2">Author</p>
 
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Post Title</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Author</h6>
-                    <p class="card-text">This is some example text that is here to serve the purpose 
-                        of filling out the post text so that it looks more realistic and like a real post. lalalalalal</p>
-                </div>
-            </div>
+            <p class="text-wrap mb-5">Post Content goes here.</p>
 
+            <p class="h4">Comments
+                <button class="btn btn-secondary" data-bs-toggle="collapse"  data-bs-target="#newCommentForm">...</button>
+            </p>
+
+            <form class="collapse mt-4" id="newCommentForm">
+                <input class="form-control mb-2" type="text" name="content" id="newCommentUsername" placeholder="Username">
+                <textarea name="content" id="newCommentContent" class="form-control mb-2" type="search" placeholder="Text..."
+                aria-label="Text"></textarea>
+                <button class="btn btn-primary">Reply</button>
+            </form>
+            <hr>
         </div>
+
+
+
 
         <!-- display this col only on md and up -->
         <div class="col-md-4 d-none d-md-block">
-            
-            <div class="card">
+
+            <div class="card sticky-top">
                 <div class="card-body">
                     <h5 class="card-title">New Post</h5>
-                    <input id="newPostTitle" class="form-control mb-2" type="search" placeholder="Post Title" aria-label="Title">
-                    <input id="newPostAuthor" class="form-control mb-2" type="search" placeholder="Username" aria-label="Author">
-                    <textarea id="newPostContent" class="form-control mb-2" type="search" placeholder="Text..." aria-label="Text"></textarea>
+                    <input id="newPostTitle" class="form-control mb-2" type="search" placeholder="Post Title"
+                        aria-label="Title">
+                    <input id="newPostAuthor" class="form-control mb-2" type="search" placeholder="Username"
+                        aria-label="Author">
+                    <textarea id="newPostContent" class="form-control mb-2" type="search" placeholder="Text..."
+                        aria-label="Text"></textarea>
                     <button id="newPostButton" class="btn btn-primary">Create</button>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import path from "path";
 import {engine} from "express-handlebars";
 import PostManager from "./PostsManager";
+import { isUndefined } from "util";
 
 const app = express();
 
@@ -31,6 +32,27 @@ app.use(express.static("static"));
 app.get("/", (req: Request, res: Response) => {
     res.render("home", {post: PostManager.getInstance().getPosts()})
 });
+
+app.get('/posts/:id', (req: Request, res: Response) => {
+    var post = PostManager.getInstance().getPost(Number.parseInt(req.params.id))
+    if (post === undefined) {
+        res.sendStatus(404);
+        return
+    }
+
+    var comments = []
+
+    post.comments.forEach(element => {
+        
+    });
+
+    res.render("posts", {
+        title: post.title,
+        author: post.author,
+        content: post.content,
+        comment: 
+    })
+})
 
 
 // POSTS/COMMENTS API ------------

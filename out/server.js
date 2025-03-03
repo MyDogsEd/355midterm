@@ -27,6 +27,8 @@ app.use(express_1.default.static("static"));
 app.get("/", (req, res) => {
     res.render("home", { post: PostsManager_1.default.getInstance().getPosts() });
 });
+app.get('/posts/:id', (req, res) => {
+});
 // POSTS/COMMENTS API ------------
 // get all posts
 app.get("/api/posts", (req, res) => {

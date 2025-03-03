@@ -1,0 +1,23 @@
+<script defer src="/js/commentForm.js"></script>
+
+<p class="h2">{{title}}</p>
+<p class="text-secondary mb-2">{{author}}</p>
+
+<p class="text-wrap mb-5">{{content}}</p>
+
+<p class="h4">
+    Comments
+    <button class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#newCommentForm">...</button>
+</p>
+
+<form class="collapse mt-4" id="newCommentForm">
+    <input class="form-control mb-2" type="text" name="content" id="newCommentUsername" placeholder="Username">
+    <textarea name="content" id="newCommentContent" class="form-control mb-2" type="search" placeholder="Text..."
+        aria-label="Text"></textarea>
+    <button class="btn btn-primary">Reply</button>
+</form>
+<hr>
+
+{{#each comment}}
+    {{>comment author=this.author content=this.content}}
+{{/each}}
